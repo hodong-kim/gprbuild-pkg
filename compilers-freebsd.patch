@@ -1,0 +1,10 @@
+--- gprconfig_kb-25.0.0/db/compilers.xml.orig	2025-10-05 14:23:07.175772000 +0900
++++ gprconfig_kb-25.0.0/db/compilers.xml	2025-10-05 14:23:28.919459000 +0900
+@@ -205,6 +205,7 @@
+     </variable>
+     <runtimes default="default,kernel,native">
+        <directory group="default" >\.\./lib(32|64)?/gcc(-lib)?/$TARGET/($gcc_version|$gcc_version_major)/adalib/</directory>
++       <directory group="default" >\.\./lib/gcc$gcc_version_major/gcc/$TARGET/$gcc_version/adalib/</directory>
+        <directory group="default" contents="^rts-">\.\./lib(32|64)?/gcc(-lib)?/$TARGET/($gcc_version|$gcc_version_major)/ada_object_path</directory>
+        <directory group="4" >\.\./lib(32|64)?/gcc(-lib)?/$TARGET/($gcc_version|$gcc_version_major)/rts-(.*)/adalib/</directory>
+        <directory group="2" >\.\./$TARGET/lib(32|64)?/gnat/(.*)/adalib/</directory>
