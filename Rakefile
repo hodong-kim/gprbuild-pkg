@@ -7,10 +7,22 @@ XMLADA       = "xmlada-#{VERSION}"
 
 RAKE_ROOT    = File.expand_path(File.dirname(__FILE__))
 STAGE_DIR    = File.join(RAKE_ROOT, 'stage')
-TARGET       = `gcc -dumpmachine`.strip
-GMAKE        = "/usr/local/bin/gmake"
 PATH         = "#{RAKE_ROOT}/#{GPRBUILD}/bootstrap/bin:$PATH"
 GPR_PROJECT_PATH = "#{RAKE_ROOT}/#{GPRBUILD}/bootstrap/share/gpr"
+
+GCC      = "/usr/local/bin/gcc14"
+GNATMAKE = "/usr/local/bin/gnatmake14"
+GMAKE    = "/usr/local/bin/gmake"
+TARGET   = `#{GCC} -dumpmachine`.strip
+
+# 🔗 Create symbolic links (requires sudo)
+puts "🔗 Creating gcc/gnatmake symlinks..."
+puts "⚠️ At this step, sudo privileges are required. A password prompt may appear."
+sh "sudo ln -sf #{GCC} /usr/local/bin/gcc"
+sh "sudo ln -sf /usr/local/bin/gnatmake14 /usr/local/bin/gnatmake"
+sh "sudo ln -sf /usr/local/bin/gnatls14   /usr/local/bin/gnatls"
+sh "sudo ln -sf /usr/local/bin/gnatbind14 /usr/local/bin/gnatbind"
+sh "sudo ln -sf /usr/local/bin/gnatlink14 /usr/local/bin/gnatlink"
 
 FILES_TO_DOWNLOAD = [
   {
@@ -146,7 +158,7 @@ file 'bootstrap' => [GPRBUILD,
       "--prefix=./bootstrap"
     ]
 
-    sh command_parts.join(' ')
+    sh "GNATMAKE=#{GNATMAKE} CC=#{GCC} " + command_parts.join(' ')
   end
   sh "touch bootstrap"
   puts "👍 Bootstrap completed."
