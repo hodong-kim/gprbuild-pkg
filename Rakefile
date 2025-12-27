@@ -1,5 +1,6 @@
 # gprbuild-pkg/Rakefile
 
+PKG_NAME     = "gprbuild-gcc14"
 VERSION      = "25.0.0"
 GPRBUILD     = "gprbuild-#{VERSION}"
 GPRCONFIG_KB = "gprconfig_kb-#{VERSION}"
@@ -71,8 +72,8 @@ task 'pkg' => 'build-gprbuild' do
 ver = `uname -r`.split(".")[0] # 14.3-RELEASE
 
 manifest_content = <<~MANIFEST
-  name: gprbuild
-  origin: devel/gprbuild
+  name: #{PKG_NAME}
+  origin: local/#{PKG_NAME}
   version: "#{VERSION}"
   comment: "Multi-language build tool based on GPR project files"
   desc: "Gprbuild is a build tool that automates the construction of multi-language systems. It uses project files (.gpr) to describe the source files, dependencies, and compiler switches."
@@ -216,15 +217,15 @@ end
 task :clean do
   puts "Cleaning up unpacked source directories..."
   dirs_to_clean = file_list.map { |f| f.gsub('.tar.gz', '') }
-  rm_rf(file_list,                 verbose: true)
-  rm_rf(dirs_to_clean,             verbose: true)
-  rm_rf(STAGE_DIR,                 verbose: true)
-  rm_rf('patch_xml',               verbose: true)
-  rm_rf('bootstrap',               verbose: true)
-  rm_rf('build-gprbuild',          verbose: true)
-  rm_rf('build-xmlada',            verbose: true)
-  rm_rf("gprbuild-#{VERSION}.pkg", verbose: true)
-  rm_rf('setup',                   verbose: true)
-  rm_rf('+MANIFEST',               verbose: true)
-  rm_rf('plist',                   verbose: true)
+  rm_rf(file_list,                    verbose: true)
+  rm_rf(dirs_to_clean,                verbose: true)
+  rm_rf(STAGE_DIR,                    verbose: true)
+  rm_rf('patch_xml',                  verbose: true)
+  rm_rf('bootstrap',                  verbose: true)
+  rm_rf('build-gprbuild',             verbose: true)
+  rm_rf('build-xmlada',               verbose: true)
+  rm_rf("#{PKG_NAME}-#{VERSION}.pkg", verbose: true)
+  rm_rf('setup',                      verbose: true)
+  rm_rf('+MANIFEST',                  verbose: true)
+  rm_rf('plist',                      verbose: true)
 end
